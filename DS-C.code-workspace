@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "DS-C",
+			"path": "."
+		}
+	],
+	"settings": {
+		"C_Cpp.errorSquiggles": "disabled"
+	}
+}
