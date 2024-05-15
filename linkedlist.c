@@ -1,355 +1,121 @@
 #include<stdio.h>
-#include<conio.h>
 #include<stdlib.h>
 
-struct node{
+struct linkedlist {
     int data;
-    struct node *add;
-};struct node *start=NULL,*temp,*new1,*next,*prev,*arr[50];
- 
+    struct linkedlist* next;
+};
 
-
-void create(){
-    int n;
-    char ch;
-    printf("ENTER THE first elemet TO BE STORED:");
-    scanf("%d",&n);
-    start=(struct node*)(malloc(sizeof(struct node)));
-    start->add=NULL;
-    start->data=n;
-    temp=start;
-    printf("\n do you want to continue:" );
-    ch=getche();
-while(ch=='y'||ch=='Y')
-{
-printf("\n ENTER THE next elemet TO BE STORED:");
-scanf("%d",&n);
-new1=(struct node*)(malloc(sizeof(struct node)));
-new1->data=n;
-new1->add=NULL;
-temp->add=new1;
-temp=temp->add;
-
-printf("\n  do you want to continue");
-ch=getche();
-
-}
-    
+struct linkedlist* create(int data) {
+    struct linkedlist* new_node = malloc(sizeof(struct linkedlist));
+    new_node->data = data;
+    new_node->next = NULL;
+    return new_node;
 }
 
-void display()
-{
-temp=start;
-if(start==NULL){
-    printf("THE LIST IS EMPTY");
-}
-
-else{
-while(temp!=NULL){
-    printf("%d  ",temp->data);
-    temp=temp->add;
-}
-}
-
-}
-
-void insert_first()
-
-{
-   
-
-    if(start==NULL){
-        printf("\n LIST NOT FOUND");
-    }
-
-else{
-     int n;
-    printf("enter the number to be stored in start");
-scanf("%d",&n);
-new1=(struct node*)(malloc(sizeof(struct node)));
-new1->add=start;
-new1->data=n;
-start=new1;
-}
-
-}
-
-void insert_last()
-
-{
-    int n;
-if(start==NULL){
-    printf(" \n THE LIST IS EMPTY");
-}
-else{
-   
-    printf("\n enter the number to be inserted");
-     scanf("%d",&n);
-    new1=(struct node *)(malloc(sizeof(struct node)));
-    new1->data=n;
-    new1->add=NULL;
-    temp=start;
-    while(temp->add!=NULL){
-        temp=temp->add;
-    }
-    temp->add=new1;
-   }
-   
-}
-
- void insert_middle()
-{
-int n,pos,i=1;
-if(start==NULL)
-printf("\n LIST NOT FOUND");
-else
-{
-    printf("enter element to insert");
-    scanf("%d",&n);
-    new1=(struct node *)malloc(sizeof(struct node));
-    new1->data=n;
-    new1->add=NULL;
-    printf("\n enter the position where the node should be inserted");
-    scanf("%d",&pos);
-next=start;
-while(i<pos)
-{
-prev=next;
-next=next->add;
-i++;
-}
-prev->add=new1;
-new1->add=next;
-}
-}
-
-
-void delete_first(){
-
-    if(start==NULL){
-        printf("THE LSIT IS NOT PREENET");
-    }
-    else{
-temp=start;
-start=start->add;
-printf("the elemet removed is %d",temp->data);
-free(temp);
-
-    }
-}
-
-
-
-void delete_middle(){
-    int pos,i=1;
-    if(start==NULL){
-        printf("THE LSIT IS NOT PREENET");
-    }
-    else{
-
-        printf("enter the position");
-        scanf("%d",&pos);
-        temp=start;
-        while(i<pos){
-        prev=temp;
-        temp=temp->add;
-        i++;
+void print(struct linkedlist* head) {
+    if(head == NULL) {
+        printf("The list is empty\n");
+    } else {
+        struct linkedlist* temp = head;
+        while(temp != NULL) {
+            printf(" %d ", temp->data);
+            temp = temp->next;
         }
-        next=temp->add;
-        prev->add=next;
-        printf("the deleteed elememt is %d",temp->data);
-        free(temp);
-
-}
-}
-
-
-
-void delete_last(){
- if(start==NULL){
-        printf("THE LSIT IS NOT PREENET");
-    }
-    else
-    {
-temp=start;
-while(temp->add!=NULL){
-
-prev=temp;
-    temp=temp->add;
-}
-prev->add=NULL;
-printf("the elemet removed is %d",temp->data);
-free(temp);
-    }
-
-}
-
-
-void search()
-{
-    int key,f=0;
-    printf("enter the key");
-    scanf("%d",&key);
-    if(start==NULL){
-        printf("THE LSIT IS NOT PREENET");
-    }
-    else
-    {
-        temp=start;
-        while(temp!=NULL){
-           if(temp->data==key)
-           {
-            f=1;
-            break;
-           }
-           temp=temp->add;
-
-         
-        }
-          if(f==1){
-            printf("searching success");
-           }
-           else{
-            printf("seraching not success");
-           }
-         
-}
-}
-
-void count()
-{
-    int count=0;
- if(start==NULL){
-        printf("THE LSIT IS NOT PREENET");
-    }
-    else
-    {
-temp=start;
-while(temp!=NULL)
-{
-count++;
-temp=temp->add;
-}
-printf("the count is %d",count);
+        printf("\n");
     }
 }
 
-void sort()
-{
-    int temp1;
-
-if(start==NULL){
-        printf("THE LSIT IS NOT PREENET");
-    }
-    else
-    {
-    prev=start;
-    while(prev!=NULL){
-next=prev->add;
-while(next!=NULL){
-
-    if(next->data < prev->data)
-    {
-        temp1=prev->data;
-        prev->data=next->data;
-        next->data=temp1;
-    }
-    next=next->add;
-}
-prev=prev->add;
-    }
-    }
-
+struct linkedlist* insert_first(struct linkedlist* head, int data) {
+    struct linkedlist* first = malloc(sizeof(struct linkedlist));
+    first->data = data;
+    first->next = head;
+    head = first;
+    return head;
 }
 
-void reverse_travserse()
-{
-int i;
-if(start==NULL){
-    printf("THE LIST IS NOT PRESENT");
-}
-else{
-    i=0;
-    next=start;
-    while(next!=NULL)
-    {
-        arr[i]=next;
-        next=next->add;
-        i++;
-
+struct linkedlist* insert_last(struct linkedlist* head, int data) {
+    struct linkedlist* last = malloc(sizeof(struct linkedlist));
+    last->data = data;
+    last->next = NULL;
+    if (head == NULL) {
+        head = last;
+        return head;
     }
-    i--;
-    while(i>0)
-    {
-        printf("%d",arr[i]->data);
-        i--;
+    struct linkedlist* temp = head;
+    while(temp->next != NULL) {
+        temp = temp->next;
     }
+    temp->next = last;
+    return head;
 }
+
+struct linkedlist* insert_middle(struct linkedlist* head, int pos, int data) {
+    if(head == NULL) {
+        printf("List does not exist\n");
+        return head;
+    }
+    struct linkedlist* middle = malloc(sizeof(struct linkedlist));
+    middle->data = data;
+    struct linkedlist* temp = head;
+    struct linkedlist* q = NULL;
+    int k = 1;
+    while (temp != NULL && k < pos) {
+        q = temp;
+        temp = temp->next;
+        k++;
+    }
+    if (temp == NULL) {
+        printf("Position out of range\n");
+        free(middle);
+        return head;
+    }
+    q->next = middle;
+    middle->next = temp;
+    return head;
 }
 
+//reversw
 
-
-
-
-
-
-
-
-int main()
-{
-
-int choice;
-do{
-printf("\n--------LINKEDLIST---------");
-printf("\n1.CREATE");
-printf("\n2.DISPLAY");
-printf("\n3.INSERT FIRST");
-printf("\n4.INSERT MIDDLE");
-printf("\n5.INSERT LAST");
-printf("\n6.DELETE FIRST");
-printf("\n7.DELETE MIDDLE");
-printf("\n8.DELETE LAST");
-printf("\n9.SEARCH");
-printf("\n10.COUNT");
-printf("\n11.SORT");
-printf("\n11.REVERSE TRAVERSE");
-
-printf("\n11.EXIT");
-
-
-printf("\n ENTER YOUR CHOICE");
-scanf("%d",&choice);
-switch(choice)
-{
-    case 1: create();
-    break;
-    case 2: display();
-    break;
-    case 3: insert_first();
-    break;
-    case 4: insert_middle();
-    break;
-     case 5: insert_last();
-     break;
-    case 6: delete_first();
-    break;
-    case 7: delete_middle();
-    break;
-    case 8: delete_last();
-    break;
-    case 9: search();
-    break;
-     case 10: count();
-    break;
-    case 11: sort();
-    break;
-     case 12: reverse_travserse();
-    break;
-    
-    default:printf("invalid case");
+struct linkedlist* reversal(struct linkedlist* head){
+    struct linkedlist* temp=NULL,*nextnode=NULL;
+    while(head){
+        nextnode=head->next;
+        head->next=temp;
+        temp=head;
+        head=nextnode;
+    }
+    return temp;
 }
-} while(choice!=13);
 
+int main() {
+    struct linkedlist* head = malloc(sizeof(struct linkedlist));
+    head->data = 3;
+    head->next = NULL;
 
-return 0;
+    struct linkedlist* new1 = create(2);
+    struct linkedlist* new2 = create(4);
+    struct linkedlist* new3 = create(5);
+    struct linkedlist* new4 = create(6);
+
+    head->next = new1;
+    head->next->next = new2;
+    head->next->next->next = new3;
+    head->next->next->next->next = new4;
+
+    head = insert_first(head, 23);
+    head = insert_first(head, 24);
+    print(head);
+
+    head = insert_last(head, 23);
+    head = insert_last(head, 24);
+    print(head);
+
+    head = insert_middle(head, 3, 20);
+    print(head);
+
+struct linkedlist*temp=reversal(head);
+    print(temp);
+
+    return 0;
 }

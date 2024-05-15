@@ -1,16 +1,16 @@
 #include<stdio.h>
+void bubblesort(int arr[],int n){
 
-void selectionsort(int arr[],int n)
-{
-for(int i=0;i<n;i++){
-    for(int j=i+1;j<n;j++){
-        if(arr[j]<arr[i]){
-          int temp=arr[i];
-          arr[i]=arr[j];
-          arr[j]=temp;
+    for(int i=0;i<n-1;i++){
+        for(int j=0;j<n-i-1;j++){//comparison between n-1 and n-i-1
+               if(arr[j]>arr[j+1]){//comparison bewtween j and j+1
+                int temp=arr[j+1];
+                arr[j+1]=arr[j];
+                arr[j]=temp;
+
+            }
         }
-    }
-}
+            }
 }
 
 
@@ -26,8 +26,9 @@ int main(){
     
 
     printf("..............array after sorting..........\n");
-    selectionsort(arr,n);
+    bubblesort(arr,n);
     for(int j=0;j<n;j++){
         printf(" %d ",arr[j]);
     }
+
 }
